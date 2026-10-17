@@ -69,17 +69,29 @@ Lösungsblatts "Zentren der Weltwirtschaft").
 
 - **Kein Sofort-Feedback.** Eine Antwort wird nur als "ausgewählt" markiert, nicht
   als richtig/falsch angezeigt – das ist bei einem benoteten Test so gewollt.
-- **19 Fragen, 112 Punkte gesamt**, bewusst über alle drei Anforderungsbereiche verteilt:
-  - **AFB I (Reproduktion)** – 9 Fragen (MC/Wahr-Falsch), je 4 Punkte = 36 Punkte
-  - **AFB II (Anwendung/Transfer)** – 5 MC/Wahr-Falsch-Fragen (je 6 Punkte) + 1
-    Zuordnungsfrage und 1 Reihenfolge-Frage (je 8 Punkte, mit Teilpunkten) = 46 Punkte
+- **27 Fragen, 154 Punkte gesamt**, bewusst über alle drei Anforderungsbereiche verteilt:
+  - **AFB I (Reproduktion)** – 12 Fragen (MC/Wahr-Falsch), je 4 Punkte = 48 Punkte
+  - **AFB II (Anwendung/Transfer)** – 10 MC/Wahr-Falsch-Fragen (je 6 Punkte) + 1
+    Zuordnungsfrage und 1 Reihenfolge-Frage (je 8 Punkte, mit Teilpunkten) = 76 Punkte
   - **AFB III (Reflexion)** – 3 offene Fragen (freier Text, je 10 Punkte) = 30 Punkte,
     darunter die Beschreibung/Interpretation einer im Unterricht behandelten Karikatur
-    (Erdöl-Fördermächte vs. Industriestaaten) und eine Frage zur Aussagekraft des BIP
-    über die tatsächliche Vermögensverteilung
+    (Erdöl-Fördermächte vs. Industriestaaten) und eine Frage zur Aussagekraft von BIP
+    pro Kopf und Gini-Index über die tatsächliche Vermögensverteilung
+  - Ein eigener Block zu 8 Fragen stammt aus dem Arbeitsblatt "Das BIP – kurz
+    nachgedacht" (was zählt zum BIP, Entstehung/Verteilung/Verwendung, BIP-pro-Kopf-
+    Berechnung, Unwetter-Beispiel zur Kritik am BIP als Wohlstandsmaß)
+- **Zufällige Reihenfolge pro Versuch.** Die automatisch bewerteten Fragen (AFB I/II)
+  werden bei jedem Testversuch neu gemischt, ebenso die Reihenfolge der
+  Antwortmöglichkeiten bei Multiple-Choice/Wahr-Falsch-Fragen. Die drei offenen
+  Reflexionsfragen stehen immer als fester Block am Schluss (in der Reihenfolge
+  Karikatur → BIP/Gini → Kapitelabschluss).
+- **Zwischen den drei Reflexionsfragen vor/zurück wechseln.** Innerhalb dieses
+  Schluss-Blocks kann man noch einmal zur vorherigen offenen Frage zurückblättern,
+  bevor man endgültig abgibt – bereits eingegebener Text bleibt dabei erhalten. Bei
+  den automatisch bewerteten Fragen davor gibt es bewusst kein Zurückblättern.
 - **Offene Reflexionsfragen werden NICHT automatisch bewertet.** Die Schüler:innen
   sehen direkt nach Abgabe nur den automatisch ausgewerteten Teilscore (AFB I + AFB
-  II, max. 82 Punkte); die restlichen 30 Punkte aus den drei Reflexionsfragen vergibt
+  II, max. 124 Punkte); die restlichen 30 Punkte aus den drei Reflexionsfragen vergibt
   die Lehrperson von Hand im Lehrer-Bereich bzw. beim Eintragen in iDoceo.
 - **Nicht-native Abgabe-Bestätigung**: Vor dem endgültigen Absenden zeigt die App eine
   eigene Zusammenfassungsseite ("X von Y Fragen beantwortet, Fenster Y-mal verlassen")
@@ -321,7 +333,7 @@ js/quiz-data-kapitel10.js        Fragenkatalog Übungsquiz Kapitel 10
 js/quiz-data-kapitel11_12.js     Fragenkatalog Übungsquiz Kapitel 11+12
 js/quiz.js                       Gemeinsame Übungsquiz-Ablauflogik (Sofort-Feedback, alle 4 Fragetypen)
 js/lehrer.js                     Lehrer-Dashboard-Logik Übungsquiz inkl. Kapitelauswahl und Excel-Export
-js/test-data-kapitel6.js         Fragenkatalog Test Kapitel 6 (19 Fragen, AFB I–III, inkl. Karikatur-Bild)
+js/test-data-kapitel6.js         Fragenkatalog Test Kapitel 6 (27 Fragen, AFB I–III, inkl. Karikatur-Bild)
 js/test.js                       Test-Ablauflogik (kein Sofort-Feedback, offene Fragen, Anti-Schummel-Protokoll)
 js/lehrer-test.js                Lehrer-Dashboard-Logik Test (eigenes Passwort, Volltext-Reflexionsantworten, Export)
 firestore.rules                  Sicherheitsregeln für die Firebase-Datenbank (Übungsquiz + Test)
