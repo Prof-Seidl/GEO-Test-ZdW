@@ -69,11 +69,12 @@ Lösungsblatts "Zentren der Weltwirtschaft").
 
 - **Kein Sofort-Feedback.** Eine Antwort wird nur als "ausgewählt" markiert, nicht
   als richtig/falsch angezeigt – das ist bei einem benoteten Test so gewollt.
-- **27 Fragen, 154 Punkte gesamt**, bewusst über alle drei Anforderungsbereiche verteilt:
-  - **AFB I (Reproduktion)** – 12 Fragen (MC/Wahr-Falsch), je 4 Punkte = 48 Punkte
-  - **AFB II (Anwendung/Transfer)** – 10 MC/Wahr-Falsch-Fragen (je 6 Punkte) + 1
-    Zuordnungsfrage und 1 Reihenfolge-Frage (je 8 Punkte, mit Teilpunkten) = 76 Punkte
-  - **AFB III (Reflexion)** – 3 offene Fragen (freier Text, je 10 Punkte) = 30 Punkte,
+- **27 Fragen, 68 Punkte gesamt**, bewusst über alle drei Anforderungsbereiche verteilt:
+  - **AFB I (Reproduktion)** – 12 Fragen (MC/Wahr-Falsch), je 1 Punkt = 12 Punkte
+  - **AFB II (Anwendung/Transfer)** – 10 MC/Wahr-Falsch-Fragen (je 2 Punkte) + 1
+    Zuordnungsfrage und 1 Reihenfolge-Frage (je 8 Punkte, mit Teilpunkten) = 36 Punkte
+  - **AFB I+II zusammen** = 48 Punkte
+  - **AFB III (Reflexion)** – 3 offene Fragen (freier Text, 7+7+6 Punkte) = 20 Punkte,
     darunter die Beschreibung/Interpretation einer im Unterricht behandelten Karikatur
     (Erdöl-Fördermächte vs. Industriestaaten) und eine Frage zur Aussagekraft von BIP
     pro Kopf und Gini-Index über die tatsächliche Vermögensverteilung
@@ -91,7 +92,7 @@ Lösungsblatts "Zentren der Weltwirtschaft").
   den automatisch bewerteten Fragen davor gibt es bewusst kein Zurückblättern.
 - **Offene Reflexionsfragen werden NICHT automatisch bewertet.** Die Schüler:innen
   sehen direkt nach Abgabe nur den automatisch ausgewerteten Teilscore (AFB I + AFB
-  II, max. 124 Punkte); die restlichen 30 Punkte aus den drei Reflexionsfragen vergibt
+  II, max. 48 Punkte); die restlichen 20 Punkte aus den drei Reflexionsfragen vergibt
   die Lehrperson von Hand im Lehrer-Bereich bzw. beim Eintragen in iDoceo.
 - **Nicht-native Abgabe-Bestätigung**: Vor dem endgültigen Absenden zeigt die App eine
   eigene Zusammenfassungsseite ("X von Y Fragen beantwortet, Fenster Y-mal verlassen")
@@ -136,7 +137,7 @@ eines Namens die drei Reflexionsantworten im Volltext lesen. Der **Excel-Export*
 
 - Name, automatisch erreichte Punkte, automatisches Maximum, Anzahl Fenster-Hinweise, Datum
 - für jede der drei Reflexionsfragen: den vollständigen Antworttext **und** eine
-  leere Spalte für die von Ihnen zu vergebenden Punkte (max. 10 je Frage)
+  leere Spalte für die von Ihnen zu vergebenden Punkte (max. 7, 7 bzw. 6 je Frage)
 - eine leere Spalte "Gesamtpunkte" zum händischen Eintragen der Endsumme
 
 Bewusst **keine** automatischen Excel-Formeln – das hätte die Datei unnötig
