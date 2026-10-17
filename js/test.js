@@ -300,7 +300,14 @@
         const gewaehlt = select.value;
         if (gewaehlt !== "" && parseInt(gewaehlt, 10) === i) correctCount++;
       });
-      const erreichtePunkte = Math.round(f.punkte * (correctCount / f.paare.length));
+      // Manche Zuordnungsfragen haben eine eigene Punktestaffel (f.punkteStaffel, z. B.
+      // { "5": 10, "4": 8, "3": 5 }, alles darunter 0 Punkte) statt proportionaler Rundung.
+      let erreichtePunkte;
+      if (f.punkteStaffel) {
+        erreichtePunkte = f.punkteStaffel[String(correctCount)] || 0;
+      } else {
+        erreichtePunkte = Math.round(f.punkte * (correctCount / f.paare.length));
+      }
       state.ergebnisGeschlossen[f._id] = {
         frage: f.frage,
         typ: f.type,
