@@ -269,7 +269,7 @@ const TEST_DATA = {
     "type": "matching",
     "afb": 2,
     "bereich": "Länder im Überblick",
-    "punkte": 8,
+    "punkte": 10,
     "frage": "Ordne jeden Staat dem passenden Merkmal zu.",
     "paare": [
       {
@@ -292,13 +292,18 @@ const TEST_DATA = {
         "links": "Vereinigte Arabische Emirate",
         "rechts": "Der Burj Khalifa mit 828 m Höhe steht in diesem Staat"
       }
-    ]
+    ],
+    "punkteStaffel": {
+      "5": 10,
+      "4": 8,
+      "3": 5
+    }
   },
   {
     "type": "ordering",
     "afb": 2,
     "bereich": "China",
-    "punkte": 8,
+    "punkte": 3,
     "frage": "Bringe die wirtschaftlichen Entwicklungsschritte Chinas in die richtige zeitliche Reihenfolge.",
     "elemente": [
       "Gründung der Volksrepublik China und Beginn der zentralen Planwirtschaft",
