@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Sammlung "ergebnisse": Ein Dokument pro abgeschlossenem Übungsquiz-Versuch.
+    match /ergebnisse/{docId} {
+
+      // Jede/r darf Ergebnisse lesen (für die Bestenliste in der App)
+      // und den Lehrer-Bereich. Es werden keine sensiblen Daten gespeichert
+      // (nur Name, Kapitel, Punkte, Zeitpunkt) – siehe README, Abschnitt "Sicherheit".
+      allow read: if true;
+
+      // Neue Ergebnisse dürfen angelegt werden, aber nur mit plausiblen Daten.
+      allow create: if
+        request.resource.data.keys().hasOnly(['kapitel','name','punkte','maxPunkte','prozent','antworten','zeitstempel']) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.name.size() < 60 &&
+        request.resource.data.kapitel is string &&
+        request.resource.data.punkte is number &&
+        request.resource.data.maxPunkte is number &&
+        request.resource.data.punkte >= 0 &&
+        request.resource.data.punkte <= request.resource.data.maxPunkte;
+
+      // Einmal gespeicherte Ergebnisse dürfen nicht mehr verändert oder gelöscht werden
+      // (verhindert nachträgliches Frisieren von Punkten).
+      allow update, delete: if false;
+    }
+
+    // Sammlung "test_ergebnisse": Ein Dokument pro abgegebenem summativen Test
+    // (test-kapitel6.html). Getrennt von "ergebnisse", weil hier zusätzlich freier
+    // Text (Reflexionsantworten) und ein Anti-Schummel-Protokoll gespeichert werden.
+    //
+    // ACHTUNG Sicherheitshinweis (siehe README, Abschnitt "Sicherheit"): "allow read: if true"
+    // ist nötig, damit der passwortgeschützte Lehrer-Bereich (nur clientseitiger Passwortschutz,
+    // keine echte Firebase-Authentifizierung) die Ergebnisse laden kann. Das bedeutet aber auch,
+    // dass technisch versierte SchülerInnen die gespeicherten Reflexionsantworten anderer
+    // Personen direkt aus der Datenbank auslesen könnten, wenn sie die Firebase-Projekt-ID kennen.
+    // Für ein Schulprojekt mit Test-Ergebnissen wird dieser Kompromiss als vertretbar eingestuft,
+    // sollte aber bewusst sein.
+    match /test_ergebnisse/{docId} {
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'kapitel','name','autoPunkte','autoMaxPunkte','offenMaxPunkte','gesamtMaxPunkte',
+          'antwortenGeschlossen','antwortenOffen','cheatEvents','cheatCount','zeitstempel'
+        ]) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.name.size() < 60 &&
+        request.resource.data.kapitel is string &&
+        request.resource.data.autoPunkte is number &&
+        request.resource.data.autoMaxPunkte is number &&
+        request.resource.data.autoPunkte >= 0 &&
+        request.resource.data.autoPunkte <= request.resource.data.autoMaxPunkte &&
+        request.resource.data.cheatCount is number &&
+        request.resource.data.cheatCount >= 0;
+
+      // Einmal abgegebene Testergebnisse dürfen nicht mehr verändert oder gelöscht werden.
+      allow update, delete: if false;
+    }
+  }
+}
