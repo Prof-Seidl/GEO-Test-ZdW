@@ -3,83 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geografie-Quiz · Auswahl</title>
+<title>Test Kapitel 6 · Zentren der Weltwirtschaft</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="wrap">
   <header class="app-header">
-    <span class="badge">Geografie 2. Jahrgang HAK</span>
-    <h1>Kapitel-Quiz</h1>
-    <p>Wählen Sie ein Kapitel, um das summative Übungsquiz zu starten.</p>
+    <span class="badge badge-test">Geografie 2. Jahrgang HAK</span>
+    <h1>Test · Kapitel 6</h1>
+    <p>Zentren der Weltwirtschaft außerhalb Europas</p>
   </header>
-
   <div class="card">
-    <h2>Übungsquiz (ohne Benotung, Sofort-Feedback)</h2>
-    <div class="chapter-list">
-      <a class="chapter-item" href="kapitel6.html">
-        <span>Kapitel 6 – Zentren der Weltwirtschaft außerhalb Europas</span>
-        <span class="arrow">→</span>
-      </a>
-      <a class="chapter-item" href="kapitel7.html">
-        <span>Kapitel 7 – Europa im Überblick</span>
-        <span class="arrow">→</span>
-      </a>
-      <a class="chapter-item" href="kapitel8.html">
-        <span>Kapitel 8 – Die Europäische Union</span>
-        <span class="arrow">→</span>
-      </a>
-      <a class="chapter-item" href="kapitel10.html">
-        <span>Kapitel 10 – Grundlagen und Naturraum Österreichs</span>
-        <span class="arrow">→</span>
-      </a>
-      <a class="chapter-item" href="kapitel11_12.html">
-        <span>Kapitel 11+12 – Bevölkerung &amp; Wirtschaftsstandort Österreich</span>
-        <span class="arrow">→</span>
-      </a>
-      <!--
-        Weitere Kapitel einfach nach demselben Muster ergänzen:
-        1. quiz-data-kapitelX.js im Ordner js/ anlegen (siehe quiz-data-kapitel6.js als Vorlage) –
-           die Datei muss "const QUIZ_DATA = { kapitel: "X", ... }" definieren.
-        2. kapitel6.html kopieren zu kapitelX.html und nur den Skript-Verweis auf die neue
-           quiz-data-Datei sowie Badge/Titel/Überschriften anpassen. js/quiz.js bleibt unverändert!
-        3. Hier einen weiteren <a class="chapter-item"> Eintrag hinzufügen
-        4. In js/lehrer.js das neue Kapitel im CHAPTERS-Array ergänzen
-      -->
-    </div>
+    <h2>Test starten</h2>
+    <a class="btn-primary" style="display:block; text-align:center; text-decoration:none; box-sizing:border-box;" href="test-kapitel6.html">Jetzt starten</a>
   </div>
-
-  <div class="card">
-    <h2>Benoteter Test (summativ, mit Reflexionsfragen)</h2>
-    <p style="color:var(--muted); font-size:0.92rem;">
-      Kein Sofort-Feedback, Namensabfrage, Reflexionsfragen werden von der Lehrperson bewertet.
-    </p>
-    <div class="chapter-list">
-      <a class="chapter-item chapter-item-test" href="test-kapitel6.html">
-        <span>Test · Kapitel 6 – Zentren der Weltwirtschaft außerhalb Europas</span>
-        <span class="arrow">→</span>
-      </a>
-      <!--
-        Weiteren Test nach demselben Muster ergänzen:
-        1. build_test_data.py-Vorlage anpassen bzw. test-data-kapitelX.js von Hand anlegen
-           (muss "const TEST_DATA = { kapitel: "X", ... }" definieren).
-        2. test-kapitel6.html kopieren zu test-kapitelX.html, Skript-Verweis und Badge/Titel anpassen.
-           js/test.js bleibt unverändert.
-        3. Hier einen weiteren <a class="chapter-item chapter-item-test"> Eintrag hinzufügen.
-        4. lehrer-test.html/js/lehrer-test.js: aktuell fix auf Kapitel 6 eingestellt – bei mehreren
-           Tests analog zum Übungsquiz-Lehrerbereich ein Kapitel-Dropdown ergänzen.
-      -->
-    </div>
-  </div>
-
   <div class="card">
     <h2>Für Lehrpersonen</h2>
-    <p style="color:var(--muted); font-size:0.92rem;">Ergebnisse ansehen, Bestenliste prüfen und als Excel-Datei für iDoceo exportieren.</p>
-    <a class="btn-secondary" href="lehrer.html" style="display:inline-block; text-decoration:none; margin-right:10px;">Übungsquiz-Ergebnisse</a>
-    <a class="btn-secondary" href="lehrer-test.html" style="display:inline-block; text-decoration:none;">Test-Ergebnisse (Kapitel 6)</a>
+    <a class="btn-secondary" style="display:inline-block; text-decoration:none;" href="lehrer-test.html">Zum Lehrer-Bereich</a>
   </div>
-
-  <p class="footer-note">Geospots HAK · Geografie 2. Jahrgang</p>
 </div>
 </body>
 </html>
