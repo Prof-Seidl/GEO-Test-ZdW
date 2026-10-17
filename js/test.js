@@ -4,6 +4,11 @@
 // Unterschiede zur Übungs-Quiz-Engine (js/quiz.js), bewusst so gewählt, weil
 // dies ein BENOTETER, summativer Test ist und keine Übung mit Sofort-Feedback:
 //   - Keine Sofort-Korrektur pro Frage. Auswahl wird nur markiert, nicht bewertet angezeigt.
+//   - Die automatisch bewerteten Fragen (mc/tf/matching/ordering) werden PRO VERSUCH neu
+//     gemischt (Reihenfolge der Fragen UND Reihenfolge der Antwortmöglichkeiten bei mc/tf).
+//   - Die drei offenen Reflexionsfragen stehen immer am Schluss (fixe Reihenfolge
+//     untereinander) und man kann zwischen ihnen beliebig vor/zurück wechseln, bis man
+//     endgültig abgibt.
 //   - Neuer Fragetyp "offen": freier Text (Textarea + Wortzähler), afb immer 3,
 //     wird NICHT automatisch bewertet, sondern von der Lehrperson im Lehrer-Bereich gelesen
 //     und die Punkte werden händisch (z. B. in Excel/iDoceo) vergeben.
@@ -17,7 +22,10 @@
 
 (function () {
   const TEST = TEST_DATA;
-  const FRAGEN = TEST.fragen;
+  // Jede Frage bekommt eine stabile Original-ID (Position in TEST_DATA.fragen), damit
+  // Antworten unabhängig von der gemischten Anzeige-Reihenfolge eindeutig zugeordnet
+  // und beim Zurückblättern innerhalb der offenen Fragen wiedergefunden werden können.
+  const FRAGEN = TEST.fragen.map((f, i) => Object.assign({}, f, { _id: i }));
   const AUTO_FRAGEN = FRAGEN.filter((f) => f.type !== "offen");
   const OFFEN_FRAGEN = FRAGEN.filter((f) => f.type === "offen");
   const AUTO_MAX = AUTO_FRAGEN.reduce((s, f) => s + f.punkte, 0);
@@ -26,10 +34,10 @@
 
   const state = {
     name: "",
-    index: 0,
-    autoPunkte: 0,
-    antwortenGeschlossen: [], // { frage, typ, bereich, afb, gegeben, richtig, korrekt, erreichtePunkte, maxPunkte }
-    antwortenOffen: [],       // { frage, bereich, afb, antwort, maxPunkte }
+    order: [],          // zufällig gemischte automatisch bewertete Fragen + offene Fragen am Schluss
+    posIndex: 0,         // aktuelle Position in state.order
+    ergebnisGeschlossen: {}, // _id -> { frage, typ, bereich, afb, gegeben, richtig, korrekt, erreichtePunkte, maxPunkte }
+    ergebnisOffen: {},       // _id -> { frage, bereich, afb, antwort, maxPunkte }
     cheatEvents: [],          // { typ, zeitpunkt }
     started: false,
     submitted: false
@@ -58,6 +66,7 @@
   const qMeta = document.getElementById("q-meta");
   const qText = document.getElementById("q-text");
   const qBody = document.getElementById("q-body");
+  const btnZurueck = document.getElementById("btn-zurueck");
   const btnWeiter = document.getElementById("btn-weiter");
 
   const confirmAnswered = document.getElementById("confirm-answered");
@@ -109,6 +118,15 @@
     }
   }
 
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   // ---- Schritt 1: Start ----
   btnStart.addEventListener("click", () => {
     const name = inputName.value.trim();
@@ -119,6 +137,11 @@
     nameError.classList.add("hidden");
     state.name = name;
     state.started = true;
+
+    // Reihenfolge pro Versuch neu mischen: automatisch bewertete Fragen zufällig,
+    // offene Reflexionsfragen bleiben als Block am Schluss (eigene, feste Reihenfolge).
+    state.order = shuffle(AUTO_FRAGEN).concat(OFFEN_FRAGEN);
+
     screenName.classList.add("hidden");
     screenTest.classList.remove("hidden");
     tryEnterFullscreen();
@@ -129,15 +152,6 @@
     if (e.key === "Enter") btnStart.click();
   });
 
-  function shuffle(arr) {
-    const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
   function afbLabel(afb) {
     if (afb === 1) return "AFB I · Reproduktion";
     if (afb === 2) return "AFB II · Anwendung/Transfer";
@@ -145,29 +159,32 @@
   }
 
   // ---- Frage rendern (Dispatch nach Typ) ----
-  let currentReady = false; // ob "Weiter" aktiviert werden darf
-
-  function setWeiterEnabled(ok) {
-    currentReady = ok;
-    btnWeiter.disabled = !ok;
-  }
-
   function renderQuestion() {
-    const f = FRAGEN[state.index];
-    progressFill.style.width = (state.index / FRAGEN.length * 100) + "%";
+    const f = state.order[state.posIndex];
+    progressFill.style.width = (state.posIndex / state.order.length * 100) + "%";
 
     qMeta.innerHTML =
-      `Frage ${state.index + 1} von ${FRAGEN.length} · ${escapeHtml(f.bereich)} ` +
+      `Frage ${state.posIndex + 1} von ${state.order.length} · ${escapeHtml(f.bereich)} ` +
       `<span class="afb-tag${f.afb === 3 ? " afb3" : ""}">${afbLabel(f.afb)}</span>`;
     qText.textContent = f.frage;
     qBody.innerHTML = "";
-    btnWeiter.textContent = (state.index === FRAGEN.length - 1) ? "Zur Abgabe" : "Weiter";
-    setWeiterEnabled(false);
+    btnWeiter.textContent = (state.posIndex === state.order.length - 1) ? "Zur Abgabe" : "Weiter";
+    btnWeiter.disabled = true;
+
+    // "Zurück" nur innerhalb des Blocks der offenen Reflexionsfragen am Schluss,
+    // damit man dort noch einmal zwischen den drei Fragen wechseln kann. Die
+    // automatisch bewerteten Fragen davor bleiben bewusst ohne Rücksprung.
+    const vorherigeIstOffen = state.posIndex > 0 && state.order[state.posIndex - 1].type === "offen";
+    if (f.type === "offen" && vorherigeIstOffen) {
+      btnZurueck.classList.remove("hidden");
+    } else {
+      btnZurueck.classList.add("hidden");
+    }
 
     if (f.type === "tf") {
-      renderChoice(["Wahr", "Falsch"], f);
+      renderChoice(f);
     } else if (f.type === "mc") {
-      renderChoice(f.optionen, f);
+      renderChoice(f);
     } else if (f.type === "matching") {
       renderMatching(f);
     } else if (f.type === "ordering") {
@@ -177,42 +194,55 @@
     }
   }
 
-  // ---- Typ: Multiple Choice / Wahr-Falsch (Auswahl markieren, KEINE Bewertung anzeigen) ----
-  function renderChoice(optionLabels, f) {
-    let chosenIndex = null;
+  // ---- Typ: Multiple Choice / Wahr-Falsch ----
+  // Antwortreihenfolge wird bei jeder Anzeige neu gemischt; die Zuordnung zur
+  // ursprünglichen (korrekten) Antwort läuft über "orig", nicht über die Position.
+  function renderChoice(f) {
+    let items;
+    let richtigOrig;
+    if (f.type === "tf") {
+      items = [{ label: "Wahr", orig: 0 }, { label: "Falsch", orig: 1 }];
+      richtigOrig = f.richtig === true ? 0 : 1;
+    } else {
+      items = f.optionen.map((label, i) => ({ label: label, orig: i }));
+      richtigOrig = f.richtig;
+    }
+    items = shuffle(items);
+
+    let chosen = null;
     const buttons = [];
 
-    optionLabels.forEach((label, i) => {
+    items.forEach((item) => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "option-btn";
-      btn.textContent = label;
+      btn.textContent = item.label;
       btn.addEventListener("click", () => {
-        chosenIndex = i;
-        buttons.forEach((b, j) => b.classList.toggle("selected", j === i));
-        setWeiterEnabled(true);
+        chosen = item;
+        buttons.forEach((b) => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        btnWeiter.disabled = false;
       });
       buttons.push(btn);
       qBody.appendChild(btn);
     });
 
     btnWeiter.onclick = () => {
-      if (chosenIndex === null) return;
-      const richtigIndex = f.type === "tf" ? (f.richtig === true ? 0 : 1) : f.richtig;
-      const korrekt = chosenIndex === richtigIndex;
+      if (chosen === null) return;
+      const richtigLabel = items.find((it) => it.orig === richtigOrig).label;
+      const korrekt = chosen.orig === richtigOrig;
       const erreichtePunkte = korrekt ? f.punkte : 0;
-      state.autoPunkte += erreichtePunkte;
-      state.antwortenGeschlossen.push({
+      state.ergebnisGeschlossen[f._id] = {
         frage: f.frage,
         typ: f.type,
         bereich: f.bereich,
         afb: f.afb,
-        gegeben: optionLabels[chosenIndex],
-        richtig: optionLabels[richtigIndex],
+        gegeben: chosen.label,
+        richtig: richtigLabel,
         korrekt: korrekt,
         erreichtePunkte: erreichtePunkte,
         maxPunkte: f.punkte
-      });
+      };
       goNext();
     };
   }
@@ -261,7 +291,7 @@
     qBody.appendChild(list);
 
     function checkAllFilled() {
-      setWeiterEnabled(selects.every((s) => s.value !== ""));
+      btnWeiter.disabled = !selects.every((s) => s.value !== "");
     }
 
     btnWeiter.onclick = () => {
@@ -271,8 +301,7 @@
         if (gewaehlt !== "" && parseInt(gewaehlt, 10) === i) correctCount++;
       });
       const erreichtePunkte = Math.round(f.punkte * (correctCount / f.paare.length));
-      state.autoPunkte += erreichtePunkte;
-      state.antwortenGeschlossen.push({
+      state.ergebnisGeschlossen[f._id] = {
         frage: f.frage,
         typ: f.type,
         bereich: f.bereich,
@@ -282,7 +311,7 @@
         korrekt: correctCount === f.paare.length,
         erreichtePunkte: erreichtePunkte,
         maxPunkte: f.punkte
-      });
+      };
       goNext();
     };
   }
@@ -298,7 +327,7 @@
     const list = document.createElement("div");
     list.className = "ordering-list";
     qBody.appendChild(list);
-    setWeiterEnabled(true); // Reihenfolge ist immer vollständig (nur Umsortierung)
+    btnWeiter.disabled = false; // Reihenfolge ist immer vollständig (nur Umsortierung)
 
     function draw() {
       list.innerHTML = "";
@@ -355,8 +384,7 @@
       let correctCount = 0;
       order.forEach((origIndex, pos) => { if (origIndex === pos) correctCount++; });
       const erreichtePunkte = Math.round(f.punkte * (correctCount / total));
-      state.autoPunkte += erreichtePunkte;
-      state.antwortenGeschlossen.push({
+      state.ergebnisGeschlossen[f._id] = {
         frage: f.frage,
         typ: f.type,
         bereich: f.bereich,
@@ -366,7 +394,7 @@
         korrekt: correctCount === total,
         erreichtePunkte: erreichtePunkte,
         maxPunkte: f.punkte
-      });
+      };
       goNext();
     };
   }
@@ -398,6 +426,10 @@
       ? `Antwort eingeben (Richtwert: ca. ${f.richtwoerter} Wörter) …`
       : "Antwort eingeben …";
 
+    // Bereits eingegebene Antwort wiederherstellen, falls man zu dieser Frage zurückblättert.
+    const bisherige = state.ergebnisOffen[f._id];
+    if (bisherige) textarea.value = bisherige.antwort;
+
     const counter = document.createElement("div");
     counter.className = "word-counter";
 
@@ -408,7 +440,7 @@
         : `${words.length} Wörter`;
       // Die Lehrperson bewertet den Inhalt manuell – ein leeres Feld bleibt dennoch
       // zulässig, damit niemand ohne Netz/Fehler hängen bleibt, zählt aber als unbeantwortet.
-      setWeiterEnabled(true);
+      btnWeiter.disabled = false;
     }
 
     textarea.addEventListener("input", updateCounter);
@@ -423,21 +455,31 @@
     hinweis.textContent = "Diese Reflexionsfrage wird von der Lehrperson gelesen und von Hand bewertet.";
     qBody.appendChild(hinweis);
 
-    btnWeiter.onclick = () => {
-      state.antwortenOffen.push({
+    function speichern() {
+      state.ergebnisOffen[f._id] = {
         frage: f.frage,
         bereich: f.bereich,
         afb: f.afb,
         antwort: textarea.value.trim(),
         maxPunkte: f.punkte
-      });
+      };
+    }
+
+    btnWeiter.onclick = () => {
+      speichern();
       goNext();
+    };
+
+    btnZurueck.onclick = () => {
+      speichern();
+      state.posIndex--;
+      renderQuestion();
     };
   }
 
   function goNext() {
-    state.index++;
-    if (state.index < FRAGEN.length) {
+    state.posIndex++;
+    if (state.posIndex < state.order.length) {
       renderQuestion();
     } else {
       progressFill.style.width = "100%";
@@ -449,26 +491,16 @@
   function showConfirm() {
     screenTest.classList.add("hidden");
     screenConfirm.classList.remove("hidden");
-    confirmAnswered.textContent = `${state.antwortenGeschlossen.length} von ${AUTO_FRAGEN.length}`;
-    confirmOffen.textContent = `${state.antwortenOffen.length} von ${OFFEN_FRAGEN.length}`;
+    confirmAnswered.textContent = `${Object.keys(state.ergebnisGeschlossen).length} von ${AUTO_FRAGEN.length}`;
+    confirmOffen.textContent = `${Object.keys(state.ergebnisOffen).length} von ${OFFEN_FRAGEN.length}`;
     confirmCheat.textContent = state.cheatEvents.length > 0
       ? `${state.cheatEvents.length}× protokolliert`
       : "keine";
   }
 
   btnBackToTest.addEventListener("click", () => {
-    // Letzte Frage nochmal zur Kontrolle anzeigen (keine rückwirkende Änderung
-    // bereits gespeicherter Antworten vorheriger Fragen, nur ein letzter Blick möglich).
-    state.index = FRAGEN.length - 1;
-    // Zuletzt gespeicherte Antwort dieser Frage entfernen, damit sie beim erneuten
-    // "Weiter" nicht doppelt gezählt wird.
-    const letzte = FRAGEN[FRAGEN.length - 1];
-    if (letzte.type === "offen") {
-      state.antwortenOffen.pop();
-    } else {
-      const entfernt = state.antwortenGeschlossen.pop();
-      if (entfernt) state.autoPunkte -= entfernt.erreichtePunkte;
-    }
+    // Zurück zur letzten (offenen) Frage, zum letzten Kontrollblick vor der Abgabe.
+    state.posIndex = state.order.length - 1;
     screenConfirm.classList.add("hidden");
     screenTest.classList.remove("hidden");
     renderQuestion();
@@ -486,7 +518,9 @@
 
   // ---- Abschluss ----
   function finishTest() {
-    resultAuto.textContent = `${state.autoPunkte} / ${AUTO_MAX} Punkten (automatisch ausgewertet)`;
+    const autoPunkte = Object.values(state.ergebnisGeschlossen).reduce((s, a) => s + a.erreichtePunkte, 0);
+
+    resultAuto.textContent = `${autoPunkte} / ${AUTO_MAX} Punkten (automatisch ausgewertet)`;
     resultOffenNote.textContent =
       `Zusätzlich ${OFFEN_MAX} Punkte aus ${OFFEN_FRAGEN.length} Reflexionsfrage(n) – ` +
       `diese bewertet Ihre Lehrperson von Hand. Gesamt möglich: ${GESAMT_MAX} Punkte.`;
@@ -498,25 +532,34 @@
       resultCheatNote.classList.remove("hidden");
     }
 
-    saveResult();
+    saveResult(autoPunkte);
   }
 
-  function saveResult() {
+  function saveResult(autoPunkte) {
     if (typeof db === "undefined") {
       resultSaving.classList.add("hidden");
       resultSavedError.classList.remove("hidden");
       return;
     }
 
+    // Für die Speicherung in der ursprünglichen Reihenfolge der Fragen sortieren
+    // (unabhängig von der zufälligen Anzeige-Reihenfolge dieses Versuchs).
+    const antwortenGeschlossen = FRAGEN
+      .filter((f) => state.ergebnisGeschlossen[f._id])
+      .map((f) => state.ergebnisGeschlossen[f._id]);
+    const antwortenOffen = FRAGEN
+      .filter((f) => state.ergebnisOffen[f._id])
+      .map((f) => state.ergebnisOffen[f._id]);
+
     db.collection("test_ergebnisse").add({
       kapitel: TEST.kapitel,
       name: state.name,
-      autoPunkte: state.autoPunkte,
+      autoPunkte: autoPunkte,
       autoMaxPunkte: AUTO_MAX,
       offenMaxPunkte: OFFEN_MAX,
       gesamtMaxPunkte: GESAMT_MAX,
-      antwortenGeschlossen: state.antwortenGeschlossen,
-      antwortenOffen: state.antwortenOffen,
+      antwortenGeschlossen: antwortenGeschlossen,
+      antwortenOffen: antwortenOffen,
       cheatEvents: state.cheatEvents,
       cheatCount: state.cheatEvents.length,
       zeitstempel: firebase.firestore.FieldValue.serverTimestamp()
