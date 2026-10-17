@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lehrer-Bereich · Test Kapitel 6</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="app-header">
+    <span class="badge badge-test">Lehrer-Bereich · Test</span>
+    <h1>Testergebnisse &amp; Export</h1>
+    <p>Passwortgeschützter Zugang zu den Ergebnissen des summativen Tests (Kapitel 6).</p>
+  </header>
+
+  <!-- Passwort-Abfrage -->
+  <div class="card" id="screen-login">
+    <h2>Anmeldung</h2>
+    <label for="input-password">Passwort</label>
+    <input type="password" id="input-password" autocomplete="off">
+    <p class="error-msg hidden" id="login-error">Falsches Passwort.</p>
+    <button class="btn-primary" id="btn-login">Anmelden</button>
+    <p class="footer-note" style="margin-top:16px;">
+      Hinweis: Dieses Passwort ist eigens für den Test-Bereich und unterscheidet sich vom Passwort
+      des Übungsquiz-Lehrerbereichs. Details zur Sicherheit stehen in der README.
+    </p>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="card hidden" id="screen-dashboard">
+    <h2>Übersicht – Test Kapitel 6</h2>
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" id="stat-count">–</div><div class="lbl">Abgegebene Tests</div></div>
+      <div class="stat-box"><div class="num" id="stat-avg">–</div><div class="lbl">Ø % (automatisch)</div></div>
+      <div class="stat-box"><div class="num" id="stat-cheat">–</div><div class="lbl">Mit Fenster-Hinweis</div></div>
+    </div>
+    <button class="btn-secondary" id="btn-refresh">Aktualisieren</button>
+    <button class="btn-secondary" id="btn-export" style="margin-left:8px;">Als Excel exportieren (für iDoceo)</button>
+  </div>
+
+  <div class="card hidden" id="screen-table">
+    <h2>Alle Einreichungen</h2>
+    <p style="color:var(--muted); font-size:0.88rem;">
+      Auf einen Namen klicken, um die Reflexionsantworten im Volltext zu lesen und die Punkte dafür
+      zu vergeben (z. B. direkt in der exportierten Excel-Datei).
+    </p>
+    <div id="student-list"></div>
+
+    <div class="security-note">
+      Sicherheitshinweis: Der Lesezugriff auf diese Sammlung ist aus technischen Gründen (keine echte
+      Benutzeranmeldung) nicht auf diese Seite beschränkt – ein technisch versierter Schüler könnte die
+      gespeicherten Antworten theoretisch direkt aus der Datenbank auslesen. Für ein Schulprojekt wird
+      das als vertretbarer Kompromiss eingestuft; für besonders sensible Inhalte ist das zu beachten.
+      Details siehe README.
+    </div>
+  </div>
+
+  <p class="footer-note"><a class="link-quiet" href="index.html">Zurück zur Übersicht</a></p>
+</div>
+
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/test-data-kapitel6.js"></script>
+<!-- SheetJS für den Excel-Export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/lehrer-test.js"></script>
+</body>
+</html>
