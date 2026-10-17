@@ -69,11 +69,14 @@ Lösungsblatts "Zentren der Weltwirtschaft").
 
 - **Kein Sofort-Feedback.** Eine Antwort wird nur als "ausgewählt" markiert, nicht
   als richtig/falsch angezeigt – das ist bei einem benoteten Test so gewollt.
-- **27 Fragen, 68 Punkte gesamt**, bewusst über alle drei Anforderungsbereiche verteilt:
+- **27 Fragen, 65 Punkte gesamt**, bewusst über alle drei Anforderungsbereiche verteilt:
   - **AFB I (Reproduktion)** – 12 Fragen (MC/Wahr-Falsch), je 1 Punkt = 12 Punkte
-  - **AFB II (Anwendung/Transfer)** – 10 MC/Wahr-Falsch-Fragen (je 2 Punkte) + 1
-    Zuordnungsfrage und 1 Reihenfolge-Frage (je 8 Punkte, mit Teilpunkten) = 36 Punkte
-  - **AFB I+II zusammen** = 48 Punkte
+  - **AFB II (Anwendung/Transfer)** – 10 MC/Wahr-Falsch-Fragen (je 2 Punkte) = 20 Punkte,
+    + 1 Zuordnungsfrage (max. 10 Punkte, eigene Staffel statt proportionaler Rundung:
+    5 von 5 richtig = 10 Punkte, 4 von 5 = 8 Punkte, 3 von 5 = 5 Punkte, 2 oder weniger
+    = 0 Punkte) + 1 Reihenfolge-Frage zu China (max. 3 Punkte, proportional: 1 von 3 = 1,
+    2 von 3 = 2, 3 von 3 = 3 Punkte) = 33 Punkte
+  - **AFB I+II zusammen** = 45 Punkte
   - **AFB III (Reflexion)** – 3 offene Fragen (freier Text, 7+7+6 Punkte) = 20 Punkte,
     darunter die Beschreibung/Interpretation einer im Unterricht behandelten Karikatur
     (Erdöl-Fördermächte vs. Industriestaaten) und eine Frage zur Aussagekraft von BIP
@@ -92,7 +95,7 @@ Lösungsblatts "Zentren der Weltwirtschaft").
   den automatisch bewerteten Fragen davor gibt es bewusst kein Zurückblättern.
 - **Offene Reflexionsfragen werden NICHT automatisch bewertet.** Die Schüler:innen
   sehen direkt nach Abgabe nur den automatisch ausgewerteten Teilscore (AFB I + AFB
-  II, max. 48 Punkte); die restlichen 20 Punkte aus den drei Reflexionsfragen vergibt
+  II, max. 45 Punkte); die restlichen 20 Punkte aus den drei Reflexionsfragen vergibt
   die Lehrperson von Hand im Lehrer-Bereich bzw. beim Eintragen in iDoceo.
 - **Nicht-native Abgabe-Bestätigung**: Vor dem endgültigen Absenden zeigt die App eine
   eigene Zusammenfassungsseite ("X von Y Fragen beantwortet, Fenster Y-mal verlassen")
