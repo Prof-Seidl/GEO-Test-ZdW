@@ -120,6 +120,36 @@ const TEST_DATA = {
     "richtig": 0
   },
   {
+    "type": "tf",
+    "afb": 1,
+    "bereich": "BIP / Wohlstand",
+    "punkte": 4,
+    "frage": "Ein Tischler baut einen neuen Kasten. Das zählt zum österreichischen BIP.",
+    "richtig": true
+  },
+  {
+    "type": "tf",
+    "afb": 1,
+    "bereich": "BIP / Wohlstand",
+    "punkte": 4,
+    "frage": "Deine Eltern kochen zu Hause das Abendessen. Das zählt zum österreichischen BIP.",
+    "richtig": false
+  },
+  {
+    "type": "mc",
+    "afb": 1,
+    "bereich": "BIP / Wohlstand",
+    "punkte": 4,
+    "frage": "Die Frage „Wie viel Lohn haben die Beschäftigten bekommen?“ gehört zu welcher Berechnungsart des BIP?",
+    "optionen": [
+      "Verteilung",
+      "Entstehung",
+      "Verwendung",
+      "Außenhandel"
+    ],
+    "richtig": 0
+  },
+  {
     "type": "mc",
     "afb": 2,
     "bereich": "BIP / Wohlstand",
@@ -184,6 +214,58 @@ const TEST_DATA = {
     "richtig": 0
   },
   {
+    "type": "tf",
+    "afb": 2,
+    "bereich": "BIP / Wohlstand",
+    "punkte": 6,
+    "frage": "Du verkaufst dein altes Fahrrad an einen Freund. Das zählt zum österreichischen BIP.",
+    "richtig": false
+  },
+  {
+    "type": "tf",
+    "afb": 2,
+    "bereich": "BIP / Wohlstand",
+    "punkte": 6,
+    "frage": "Eine deutsche Firma produziert in ihrem Werk in Graz. Das zählt zum österreichischen BIP (nicht zum deutschen).",
+    "richtig": true
+  },
+  {
+    "type": "mc",
+    "afb": 2,
+    "bereich": "BIP / Wohlstand",
+    "punkte": 6,
+    "frage": "Die Frage „Wie viel Wert hat die Industrie neu geschaffen?“ gehört zu welcher Berechnungsart des BIP?",
+    "optionen": [
+      "Entstehung",
+      "Verteilung",
+      "Verwendung",
+      "Außenhandel"
+    ],
+    "richtig": 0
+  },
+  {
+    "type": "mc",
+    "afb": 2,
+    "bereich": "BIP / Wohlstand",
+    "punkte": 6,
+    "frage": "Österreichs BIP beträgt rund 510 Mrd. €, es leben rund 9,2 Mio. Menschen hier. Wie hoch ist das BIP pro Kopf ungefähr?",
+    "optionen": [
+      "ca. 55.000 €",
+      "ca. 85.000 €",
+      "ca. 35.000 €",
+      "ca. 110.000 €"
+    ],
+    "richtig": 0
+  },
+  {
+    "type": "tf",
+    "afb": 2,
+    "bereich": "BIP / Wohlstand",
+    "punkte": 6,
+    "frage": "Nach einem schweren Unwetter wird viel repariert und neu gebaut, wodurch das BIP steigt. Das bedeutet automatisch, dass es den Menschen danach genauso gut oder besser geht als vorher.",
+    "richtig": false
+  },
+  {
     "type": "matching",
     "afb": 2,
     "bereich": "Länder im Überblick",
@@ -219,9 +301,9 @@ const TEST_DATA = {
     "punkte": 8,
     "frage": "Bringe die wirtschaftlichen Entwicklungsschritte Chinas in die richtige zeitliche Reihenfolge.",
     "elemente": [
-      "1949: Gründung der Volksrepublik China, Beginn der Planwirtschaft",
-      "1978: Start der Wirtschaftsreformen, Öffnung zum Weltmarkt",
-      "1992: Einführung der „sozialistischen Marktwirtschaft“"
+      "Gründung der Volksrepublik China und Beginn der zentralen Planwirtschaft",
+      "Beginn der Wirtschaftsreformen und schrittweise Öffnung zum Weltmarkt",
+      "Offizielle Einführung der „sozialistischen Marktwirtschaft“ als Wirtschaftsmodell"
     ]
   },
   {
@@ -240,7 +322,7 @@ const TEST_DATA = {
     "bereich": "BIP / Wohlstand",
     "punkte": 10,
     "richtwoerter": 40,
-    "frage": "Wie lässt sich der Reichtum eines Landes grundsätzlich messen, und wie aussagekräftig ist dieser Wert über die tatsächliche Verteilung des Geldes innerhalb der Bevölkerung? (ca. 40 Wörter)"
+    "frage": "Wie aussagekräftig sind die Werte BIP pro Kopf und Gini-Index über die tatsächliche Verteilung des Geldes innerhalb der Bevölkerung eines Landes? (ca. 40 Wörter)"
   },
   {
     "type": "offen",
