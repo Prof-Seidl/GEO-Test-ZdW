@@ -69,34 +69,36 @@ Lösungsblatts "Zentren der Weltwirtschaft").
 
 - **Kein Sofort-Feedback.** Eine Antwort wird nur als "ausgewählt" markiert, nicht
   als richtig/falsch angezeigt – das ist bei einem benoteten Test so gewollt.
-- **27 Fragen, 65 Punkte gesamt**, bewusst über alle drei Anforderungsbereiche verteilt:
-  - **AFB I (Reproduktion)** – 12 Fragen (MC/Wahr-Falsch), je 1 Punkt = 12 Punkte
-  - **AFB II (Anwendung/Transfer)** – 10 MC/Wahr-Falsch-Fragen (je 2 Punkte) = 20 Punkte,
-    + 1 Zuordnungsfrage (max. 10 Punkte, eigene Staffel statt proportionaler Rundung:
-    5 von 5 richtig = 10 Punkte, 4 von 5 = 8 Punkte, 3 von 5 = 5 Punkte, 2 oder weniger
-    = 0 Punkte) + 1 Reihenfolge-Frage zu China (max. 3 Punkte, proportional: 1 von 3 = 1,
-    2 von 3 = 2, 3 von 3 = 3 Punkte) = 33 Punkte
-  - **AFB I+II zusammen** = 45 Punkte
-  - **AFB III (Reflexion)** – 3 offene Fragen (freier Text, 7+7+6 Punkte) = 20 Punkte,
-    darunter die Beschreibung/Interpretation einer im Unterricht behandelten Karikatur
+- **22 Fragen, 50 Punkte gesamt**, bewusst über alle drei Anforderungsbereiche verteilt:
+  - **AFB I (Reproduktion)** – 12 Fragen (MC/Wahr-Falsch), je 1 Punkt = 12 Punkte,
+    alle automatisch bewertet
+  - **AFB II (Anwendung/Transfer)** – 8 Fragen = 24 Punkte: 6 MC/Wahr-Falsch-Fragen
+    (je 2 Punkte = 12 Punkte, automatisch bewertet) + 1 Kurzantwort-Frage (offen,
+    2 Punkte) + 1 Begriffserklärungs-Frage (offen, 5 Fachbegriffe à 2 Punkte =
+    10 Punkte)
+  - **AFB I+II automatisch bewertet zusammen** = 24 Punkte
+  - **AFB III (Reflexion)** – 2 offene Fragen (freier Text, je 7 Punkte) = 14 Punkte:
+    die Beschreibung/Interpretation einer im Unterricht behandelten Karikatur
     (Erdöl-Fördermächte vs. Industriestaaten) und eine Frage zur Aussagekraft von BIP
     pro Kopf und Gini-Index über die tatsächliche Vermögensverteilung
-  - Ein eigener Block zu 8 Fragen stammt aus dem Arbeitsblatt "Das BIP – kurz
-    nachgedacht" (was zählt zum BIP, Entstehung/Verteilung/Verwendung, BIP-pro-Kopf-
-    Berechnung, Unwetter-Beispiel zur Kritik am BIP als Wohlstandsmaß)
+  - Insgesamt gibt es damit **4 offene Fragen** (Kurzantwort, Begriffserklärung, und
+    die zwei Reflexionsfragen, zusammen 26 Punkte), die alle gemeinsam als fester
+    Block am Testende erscheinen (siehe unten) und von der Lehrperson von Hand
+    bewertet werden
 - **Zufällige Reihenfolge pro Versuch.** Die automatisch bewerteten Fragen (AFB I/II)
   werden bei jedem Testversuch neu gemischt, ebenso die Reihenfolge der
-  Antwortmöglichkeiten bei Multiple-Choice/Wahr-Falsch-Fragen. Die drei offenen
-  Reflexionsfragen stehen immer als fester Block am Schluss (in der Reihenfolge
-  Karikatur → BIP/Gini → Kapitelabschluss).
-- **Zwischen den drei Reflexionsfragen vor/zurück wechseln.** Innerhalb dieses
+  Antwortmöglichkeiten bei Multiple-Choice/Wahr-Falsch-Fragen. Die vier offenen
+  Fragen stehen immer als fester Block am Schluss (in der Reihenfolge Kurzantwort
+  Favela/Gated Community → Begriffserklärung → Karikatur → BIP/Gini).
+- **Zwischen den vier offenen Fragen vor/zurück wechseln.** Innerhalb dieses
   Schluss-Blocks kann man noch einmal zur vorherigen offenen Frage zurückblättern,
   bevor man endgültig abgibt – bereits eingegebener Text bleibt dabei erhalten. Bei
   den automatisch bewerteten Fragen davor gibt es bewusst kein Zurückblättern.
-- **Offene Reflexionsfragen werden NICHT automatisch bewertet.** Die Schüler:innen
-  sehen direkt nach Abgabe nur den automatisch ausgewerteten Teilscore (AFB I + AFB
-  II, max. 45 Punkte); die restlichen 20 Punkte aus den drei Reflexionsfragen vergibt
-  die Lehrperson von Hand im Lehrer-Bereich bzw. beim Eintragen in iDoceo.
+- **Offene Fragen werden NICHT automatisch bewertet.** Die Schüler:innen sehen direkt
+  nach Abgabe nur den automatisch ausgewerteten Teilscore (AFB I + AFB II ohne die
+  offenen Fragen, max. 24 Punkte); die restlichen 26 Punkte aus den vier offenen
+  Fragen vergibt die Lehrperson von Hand im Lehrer-Bereich bzw. beim Eintragen in
+  iDoceo.
 - **Nicht-native Abgabe-Bestätigung**: Vor dem endgültigen Absenden zeigt die App eine
   eigene Zusammenfassungsseite ("X von Y Fragen beantwortet, Fenster Y-mal verlassen")
   statt eines Browser-`confirm()`-Fensters, und erlaubt einen letzten Blick auf die
@@ -135,12 +137,14 @@ der Korrektur – nicht als Ersatz für Aufsicht im Klassenzimmer.
 
 Im `lehrer-test.html`-Bereich sehen Sie pro Person den automatisch bewerteten
 Punktestand, die Anzahl der Fenster-/Vollbild-Hinweise, und können durch Anklicken
-eines Namens die drei Reflexionsantworten im Volltext lesen. Der **Excel-Export**
+eines Namens die vier offenen Antworten (Kurzantwort, Begriffserklärung, die zwei
+Reflexionsfragen) im Volltext lesen. Der **Excel-Export**
 („Als Excel exportieren (für iDoceo)“) enthält pro Person:
 
 - Name, automatisch erreichte Punkte, automatisches Maximum, Anzahl Fenster-Hinweise, Datum
-- für jede der drei Reflexionsfragen: den vollständigen Antworttext **und** eine
-  leere Spalte für die von Ihnen zu vergebenden Punkte (max. 7, 7 bzw. 6 je Frage)
+- für jede der vier offenen Fragen: den vollständigen Antworttext **und** eine
+  leere Spalte für die von Ihnen zu vergebenden Punkte (max. 2, 10, 7 bzw. 7 Punkte
+  je Frage)
 - eine leere Spalte "Gesamtpunkte" zum händischen Eintragen der Endsumme
 
 Bewusst **keine** automatischen Excel-Formeln – das hätte die Datei unnötig
@@ -258,9 +262,12 @@ Analog zum Übungsquiz, mit `js/test.js` als unveränderter, gemeinsamer Engine:
 
 1. Neue Datei `js/test-data-kapitelX.js` anlegen, die `const TEST_DATA = { kapitel,
    titel, fragen: [...] }` definiert. Zusätzlich zu den vier Fragetypen oben gibt es
-   den Typ `{ type: "offen", afb: 3, bereich, punkte, richtwoerter, frage, bild?,
-   bildquelle? }` für frei zu beantwortende Reflexionsfragen (jede Frage braucht ein
-   `afb`-Feld: 1 = Reproduktion, 2 = Anwendung/Transfer, 3 = Reflexion).
+   den Typ `{ type: "offen", afb: 2|3, bereich, punkte, richtwoerter, frage, bild?,
+   bildquelle? }` für frei zu beantwortende offene Fragen (Kurzantwort, Begriffs-
+   erklärung oder Reflexion – jede Frage braucht ein `afb`-Feld: 1 = Reproduktion,
+   2 = Anwendung/Transfer, 3 = Reflexion; bei offenen Fragen meist 3, kann aber auch
+   2 sein). Alle Fragen vom Typ `offen` werden automatisch aus dem gemischten Teil
+   herausgenommen und bilden gemeinsam den festen Block am Testende.
 2. `test-kapitel6.html` kopieren zu `test-kapitelX.html`, Titel/Badge sowie den
    Skript-Verweis auf `js/test-data-kapitelX.js` anpassen.
 3. In `index.html` einen weiteren `<a class="chapter-item chapter-item-test">`-Eintrag
@@ -296,8 +303,8 @@ Diese App ist für den Schulgebrauch gebaut. Bewusste Vereinfachungen:
   `lehrer-test.html`), nicht den Datenbankzugriff selbst – wer technisch versiert
   genug ist, könnte die Ergebnisse auch ohne Passwort direkt aus der Datenbank
   auslesen. Für Klassenquiz-Punkte ist das ein akzeptables Risiko.
-- **Beim benoteten Test gilt das zusätzlich für die Reflexionsantworten im Volltext**
-  (`test_ergebnisse`-Sammlung) – das ist ein größeres Zugeständnis als beim reinen
+- **Beim benoteten Test gilt das zusätzlich für die Antworten auf die offenen Fragen
+  im Volltext** (`test_ergebnisse`-Sammlung) – das ist ein größeres Zugeständnis als beim reinen
   Übungsquiz, weil dort echter, inhaltlicher Schülertext gespeichert wird, nicht nur
   eine Punktzahl. Für ein Schulprojekt wird das als vertretbar eingestuft; sollten
   Sie eine strengere Absicherung wollen (z. B. echte Firebase-Anmeldung nur für Sie
@@ -327,7 +334,7 @@ kapitel10.html                   Übungsquiz-Seite Kapitel 10
 kapitel11_12.html                Übungsquiz-Seite Kapitel 11+12
 lehrer.html                      Lehrer-Bereich Übungsquiz (Passwort, Kapitelauswahl, Export)
 test-kapitel6.html               Benoteter Test, Kapitel 6
-lehrer-test.html                 Lehrer-Bereich Test (eigenes Passwort, Volltext-Reflexionsantworten, Export)
+lehrer-test.html                 Lehrer-Bereich Test (eigenes Passwort, Volltext-Antworten offene Fragen, Export)
 css/style.css                    Gemeinsames Design (Übungsquiz + Test)
 js/firebase-config.js            Ihre Firebase-Zugangsdaten (einmalig ausfüllen, gilt für alles)
 js/quiz-data-kapitel6.js         Fragenkatalog Übungsquiz Kapitel 6
@@ -337,8 +344,8 @@ js/quiz-data-kapitel10.js        Fragenkatalog Übungsquiz Kapitel 10
 js/quiz-data-kapitel11_12.js     Fragenkatalog Übungsquiz Kapitel 11+12
 js/quiz.js                       Gemeinsame Übungsquiz-Ablauflogik (Sofort-Feedback, alle 4 Fragetypen)
 js/lehrer.js                     Lehrer-Dashboard-Logik Übungsquiz inkl. Kapitelauswahl und Excel-Export
-js/test-data-kapitel6.js         Fragenkatalog Test Kapitel 6 (27 Fragen, AFB I–III, inkl. Karikatur-Bild)
+js/test-data-kapitel6.js         Fragenkatalog Test Kapitel 6 (22 Fragen, AFB I–III, inkl. Karikatur-Bild)
 js/test.js                       Test-Ablauflogik (kein Sofort-Feedback, offene Fragen, Anti-Schummel-Protokoll)
-js/lehrer-test.js                Lehrer-Dashboard-Logik Test (eigenes Passwort, Volltext-Reflexionsantworten, Export)
+js/lehrer-test.js                Lehrer-Dashboard-Logik Test (eigenes Passwort, Volltext-Antworten offene Fragen, Export)
 firestore.rules                  Sicherheitsregeln für die Firebase-Datenbank (Übungsquiz + Test)
 ```
