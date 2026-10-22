@@ -419,6 +419,29 @@ a.link-quiet { color: var(--green-dark); }
   text-align: center;
 }
 
+/* Countdown-Timer während des benoteten Tests */
+.timer-badge {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: inline-block;
+  background: var(--green-light);
+  color: var(--green-dark);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 14px;
+}
+
+.timer-badge.warn {
+  background: #fbe3e1;
+  color: var(--danger);
+  border-color: #f0c6c3;
+}
+
 .info-box {
   background: var(--green-light);
   border: 1px solid var(--border);
