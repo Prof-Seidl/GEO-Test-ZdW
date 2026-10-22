@@ -1,11 +1,14 @@
 // Testfragen Kapitel 6 - Zentren der Weltwirtschaft außerhalb Europas
-// Geospots HAK, 2. Jahrgang - summativer Test (keine Sofort-Korrektur, Reflexionsfragen werden
-// von der Lehrperson manuell bewertet und zum Gesamtergebnis addiert).
+// Entspricht 1:1 dem finalen Papiertest "Test_ZdW.docx" (AFB I 12 Punkte, AFB II 24
+// Punkte, AFB III 14 Punkte, gesamt 50 Punkte). Geospots HAK, 2. Jahrgang -
+// summativer Test (keine Sofort-Korrektur, offene Fragen werden von der Lehrperson
+// manuell bewertet und zum Gesamtergebnis addiert).
 //
-// Fragetypen: "mc", "tf", "matching", "ordering" (automatisch bewertet, Teilpunkte bei
-// matching/ordering) sowie "offen" (freier Text, afb immer 3, wird NICHT automatisch bewertet).
-// Jede Frage trägt ein "afb"-Feld (1 = Reproduktion, 2 = Anwendung/Transfer, 3 = Reflexion/Transfer),
-// damit alle drei Anforderungsbereiche nachweisbar abgedeckt sind.
+// Fragetypen: "mc", "tf" (automatisch bewertet) sowie "offen" (freier Text, wird
+// NICHT automatisch bewertet - das betrifft sowohl die Kurzantwort-Frage und die
+// Begriffserklärungs-Frage aus AFB II als auch die beiden Reflexionsfragen aus AFB
+// III). Jede Frage trägt ein "afb"-Feld (1 = Reproduktion, 2 = Anwendung/Transfer,
+// 3 = Reflexion), damit alle drei Anforderungsbereiche nachweisbar abgedeckt sind.
 
 const TEST_DATA = {
   kapitel: "6",
@@ -40,20 +43,20 @@ const TEST_DATA = {
     "punkte": 1,
     "frage": "Warum wurde die brasilianische Hauptstadt Brasília künstlich neu gebaut und 1960 fertiggestellt?",
     "optionen": [
-      "Um das Landesinnere zu erschließen und die überfüllte Küste zu entlasten",
+      "Weil Brasília näher am Amazonas-Regenwald liegt",
       "Weil Rio de Janeiro bei einem Erdbeben zerstört wurde",
       "Auf Anordnung der Vereinten Nationen",
-      "Weil Brasília näher am Amazonas-Regenwald liegt"
+      "Um das Landesinnere zu erschließen und die überfüllte Küste zu entlasten"
     ],
-    "richtig": 0
+    "richtig": 3
   },
   {
     "type": "tf",
     "afb": 1,
     "bereich": "Brasilien",
     "punkte": 1,
-    "frage": "Mercosur ist ein gemeinsamer Markt mehrerer südamerikanischer Staaten, dem auch Brasilien als Vollmitglied angehört.",
-    "richtig": true
+    "frage": "Mercosur ist ein gemeinsamer Markt mehrerer südostasiatischer Staaten, dem auch Indien als Vollmitglied angehört.",
+    "richtig": false
   },
   {
     "type": "mc",
@@ -112,19 +115,19 @@ const TEST_DATA = {
     "punkte": 1,
     "frage": "Woher beziehen Städte wie Dubai einen Großteil ihres Trinkwassers, obwohl die Region kaum natürliche Süßwasserquellen hat?",
     "optionen": [
-      "Meerwasserentsalzungsanlagen",
-      "Unterirdischen Gletschern",
+      "Von unterirdischen Pipelines",
+      "Grundwasserentnahme",
       "Importiertem Flaschenwasser",
-      "Künstlich angelegten Flüssen"
+      "Meerwasserentsalzungsanlagen"
     ],
-    "richtig": 0
+    "richtig": 3
   },
   {
     "type": "tf",
     "afb": 1,
     "bereich": "BIP / Wohlstand",
     "punkte": 1,
-    "frage": "Ein Tischler baut einen neuen Kasten. Das zählt zum österreichischen BIP.",
+    "frage": "Ein Tischler baut und verkauft einen neuen Kasten. Das zählt zum österreichischen BIP.",
     "richtig": true
   },
   {
@@ -152,73 +155,38 @@ const TEST_DATA = {
   {
     "type": "mc",
     "afb": 2,
-    "bereich": "BIP / Wohlstand",
-    "punkte": 2,
-    "frage": "Ein Staat hat ein sehr hohes Gesamt-BIP, aber auch sehr viele Einwohner:innen, wodurch das BIP pro Kopf vergleichsweise niedrig ausfällt. Was sagt das über den durchschnittlichen Wohlstand der Bevölkerung aus?",
-    "optionen": [
-      "Die Wirtschaftsleistung ist groß, verteilt sich aber auf sehr viele Menschen - der durchschnittliche Wohlstand ist eher gering",
-      "Jede Person im Land ist automatisch sehr wohlhabend",
-      "Das Land hat keine nennenswerte Wirtschaft",
-      "Der Gini-Koeffizient ist dadurch automatisch niedrig"
-    ],
-    "richtig": 0
-  },
-  {
-    "type": "mc",
-    "afb": 2,
     "bereich": "USA",
     "punkte": 2,
     "frage": "Von den vier Bereichen Einkommen, Gesundheit, Arbeitsmarkt und Mittelschicht verstärken sich laut dem Unterrichtsmaterial zwei besonders stark gegenseitig, weil ein geringes Einkommen auch den Versicherungsschutz gefährdet. Welche beiden Bereiche sind das?",
     "optionen": [
-      "Einkommen und Gesundheit",
-      "Arbeitsmarkt und Mittelschicht",
       "Einkommen und Arbeitsmarkt",
+      "Einkommen und Mittelschicht",
+      "Einkommen und Gesundheit",
       "Gesundheit und Mittelschicht"
     ],
-    "richtig": 0
+    "richtig": 2
   },
   {
-    "type": "mc",
+    "type": "offen",
     "afb": 2,
     "bereich": "Brasilien",
     "punkte": 2,
-    "frage": "Luana lebt in einer Favela in Rio de Janeiro, Rafael in einer bewachten Wohnanlage (Gated Community) in São Paulo. Welcher Begriff beschreibt am treffendsten den Unterschied in ihren Lebensbedingungen, obwohl beide in derselben Stadt bzw. im selben Land leben?",
-    "optionen": [
-      "Soziale Disparität",
-      "Peak Oil",
-      "Importsubstitution",
-      "Multipolare Welt"
-    ],
-    "richtig": 0
+    "frage": "Luana lebt in einer Favela in Rio de Janeiro, Rafael in einer bewachten Wohnanlage (Gated Community) in São Paulo. Welcher Fachbegriff beschreibt am treffendsten den Unterschied in ihren Lebensbedingungen, obwohl beide in derselben Stadt bzw. im selben Land leben? (Ein Fachbegriff genügt.)"
   },
   {
     "type": "tf",
     "afb": 2,
     "bereich": "BIP / Wohlstand",
     "punkte": 2,
-    "frage": "Der Gini-Koeffizient ist eine Maßzahl für die Ungleichheit der Einkommensverteilung in einem Land - ein Wert nahe 0 bedeutet eine eher gleiche Verteilung, ein hoher Wert eine sehr ungleiche.",
-    "richtig": true
-  },
-  {
-    "type": "mc",
-    "afb": 2,
-    "bereich": "China",
-    "punkte": 2,
-    "frage": "Was bedeutet der Begriff „Importsubstitution“, mit dem z. B. Indien ab den 1970er-Jahren versuchte, die eigene Wirtschaft zu schützen?",
-    "optionen": [
-      "Ersatz von Importwaren durch geschützte eigene Produktion",
-      "Vollständiges Verbot sämtlicher Importe für immer",
-      "Förderung des Exports durch Subventionen",
-      "Abschaffung aller Zölle zwischen zwei Staaten"
-    ],
-    "richtig": 0
+    "frage": "Der Gini-Koeffizient ist eine Maßzahl für die Ungleichheit der Einkommensverteilung in einem Land - ein Wert nahe 0 bedeutet eine sehr ungleiche Verteilung, ein hoher Wert eine eher gleiche Verteilung.",
+    "richtig": false
   },
   {
     "type": "tf",
     "afb": 2,
     "bereich": "BIP / Wohlstand",
     "punkte": 2,
-    "frage": "Du verkaufst dein altes Fahrrad an einen Freund. Das zählt zum österreichischen BIP.",
+    "frage": "Du verkaufst dein altes Fahrrad über einen Online-Marktplatz. Das zählt zum österreichischen BIP.",
     "richtig": false
   },
   {
@@ -228,20 +196,6 @@ const TEST_DATA = {
     "punkte": 2,
     "frage": "Eine deutsche Firma produziert in ihrem Werk in Graz. Das zählt zum österreichischen BIP (nicht zum deutschen).",
     "richtig": true
-  },
-  {
-    "type": "mc",
-    "afb": 2,
-    "bereich": "BIP / Wohlstand",
-    "punkte": 2,
-    "frage": "Die Frage „Wie viel Wert hat die Industrie neu geschaffen?“ gehört zu welcher Berechnungsart des BIP?",
-    "optionen": [
-      "Entstehung",
-      "Verteilung",
-      "Verwendung",
-      "Außenhandel"
-    ],
-    "richtig": 0
   },
   {
     "type": "mc",
@@ -266,50 +220,11 @@ const TEST_DATA = {
     "richtig": false
   },
   {
-    "type": "matching",
+    "type": "offen",
     "afb": 2,
-    "bereich": "Länder im Überblick",
+    "bereich": "Fachbegriffe",
     "punkte": 10,
-    "frage": "Ordne jeden Staat dem passenden Merkmal zu.",
-    "paare": [
-      {
-        "links": "Republik Südafrika",
-        "rechts": "Hier liegen die drei Hauptstädte Pretoria, Kapstadt und Bloemfontein"
-      },
-      {
-        "links": "Brasilien",
-        "rechts": "Die Hauptstadt wurde am Reißbrett geplant und 1960 fertiggestellt"
-      },
-      {
-        "links": "USA",
-        "rechts": "Der bundesweite Mindestlohn liegt seit 2009 bei 7,25 Dollar pro Stunde"
-      },
-      {
-        "links": "Indien",
-        "rechts": "Bengaluru gilt als das Silicon Valley dieses Staates"
-      },
-      {
-        "links": "Vereinigte Arabische Emirate",
-        "rechts": "Der Burj Khalifa mit 828 m Höhe steht in diesem Staat"
-      }
-    ],
-    "punkteStaffel": {
-      "5": 10,
-      "4": 8,
-      "3": 5
-    }
-  },
-  {
-    "type": "ordering",
-    "afb": 2,
-    "bereich": "China",
-    "punkte": 3,
-    "frage": "Bringe die wirtschaftlichen Entwicklungsschritte Chinas in die richtige zeitliche Reihenfolge.",
-    "elemente": [
-      "Gründung der Volksrepublik China und Beginn der zentralen Planwirtschaft",
-      "Beginn der Wirtschaftsreformen und schrittweise Öffnung zum Weltmarkt",
-      "Offizielle Einführung der „sozialistischen Marktwirtschaft“ als Wirtschaftsmodell"
-    ]
+    "frage": "Erkläre die folgenden Begriffe in Stichworten bzw. kurzen Sätzen: Rohstoffökonomie, Peak Oil, BRICS, Importsubstitution, Sonderwirtschaftszone. (Bewertung: 2 Punkte pro richtig erklärtem Begriff, insgesamt 10 Punkte.)"
   },
   {
     "type": "offen",
@@ -328,14 +243,6 @@ const TEST_DATA = {
     "punkte": 7,
     "richtwoerter": 40,
     "frage": "Wie aussagekräftig sind die Werte BIP pro Kopf und Gini-Index über die tatsächliche Verteilung des Geldes innerhalb der Bevölkerung eines Landes? (ca. 40 Wörter)"
-  },
-  {
-    "type": "offen",
-    "afb": 3,
-    "bereich": "Kapitelabschluss",
-    "punkte": 6,
-    "richtwoerter": 40,
-    "frage": "Nimm Stellung zur Leitfrage: „Wirtschaftliche Stärke und soziale Gerechtigkeit sind zwei verschiedene Dinge.“ Belege deine Position mit mindestens einem Beispiel aus dem Unterricht (ca. 40 Wörter)."
   }
 ]
 };
