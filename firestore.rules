@@ -44,7 +44,7 @@ service cloud.firestore {
       allow create: if
         request.resource.data.keys().hasOnly([
           'kapitel','name','autoPunkte','autoMaxPunkte','offenMaxPunkte','gesamtMaxPunkte',
-          'antwortenGeschlossen','antwortenOffen','cheatEvents','cheatCount','zeitstempel'
+          'antwortenGeschlossen','antwortenOffen','cheatEvents','cheatCount','zeitAbgelaufen','zeitstempel'
         ]) &&
         request.resource.data.name is string &&
         request.resource.data.name.size() > 0 &&
