@@ -6,12 +6,14 @@
 //   - Keine Sofort-Korrektur pro Frage. Auswahl wird nur markiert, nicht bewertet angezeigt.
 //   - Die automatisch bewerteten Fragen (mc/tf/matching/ordering) werden PRO VERSUCH neu
 //     gemischt (Reihenfolge der Fragen UND Reihenfolge der Antwortmöglichkeiten bei mc/tf).
-//   - Die drei offenen Reflexionsfragen stehen immer am Schluss (fixe Reihenfolge
-//     untereinander) und man kann zwischen ihnen beliebig vor/zurück wechseln, bis man
-//     endgültig abgibt.
-//   - Neuer Fragetyp "offen": freier Text (Textarea + Wortzähler), afb immer 3,
-//     wird NICHT automatisch bewertet, sondern von der Lehrperson im Lehrer-Bereich gelesen
-//     und die Punkte werden händisch (z. B. in Excel/iDoceo) vergeben.
+//   - Alle offenen Fragen (Kurzantwort, Begriffserklärung, Reflexionsfragen) stehen immer
+//     am Schluss als fixer Block (feste Reihenfolge untereinander) und man kann zwischen
+//     ihnen beliebig vor/zurück wechseln, bis man endgültig abgibt.
+//   - Fragetyp "offen": freier Text (Textarea + Wortzähler), wird NICHT automatisch
+//     bewertet, sondern von der Lehrperson im Lehrer-Bereich gelesen und die Punkte werden
+//     händisch (z. B. in Excel/iDoceo) vergeben. afb ist meist 3 (Reflexion), kann aber auch
+//     2 sein (z. B. Kurzantwort- oder Begriffserklärungs-Fragen, die sich nicht zuverlässig
+//     automatisch auswerten lassen).
 //   - Eigene, nicht-native Abgabe-Bestätigung vor dem endgültigen Absenden.
 //   - Anti-Schummel-Protokoll: Tabwechsel/Fensterwechsel (Page Visibility API) und
 //     Verlassen des Vollbildmodus werden mitgezählt und mitgespeichert. Das ist ein
@@ -22,6 +24,7 @@
 
 (function () {
   const TEST = TEST_DATA;
+  const ZEITLIMIT_SEKUNDEN = 23 * 60; // Timer startet mit der ersten Frage, siehe btnStart unten.
   // Jede Frage bekommt eine stabile Original-ID (Position in TEST_DATA.fragen), damit
   // Antworten unabhängig von der gemischten Anzeige-Reihenfolge eindeutig zugeordnet
   // und beim Zurückblättern innerhalb der offenen Fragen wiedergefunden werden können.
@@ -40,8 +43,15 @@
     ergebnisOffen: {},       // _id -> { frage, bereich, afb, antwort, maxPunkte }
     cheatEvents: [],          // { typ, zeitpunkt }
     started: false,
-    submitted: false
+    submitted: false,
+    endTime: null,            // Date.now()-Zeitstempel, zu dem die Zeit abläuft
+    zeitAbgelaufen: false
   };
+
+  let timerInterval = null;
+  // Wird von renderOffen() gesetzt, solange eine offene Frage aktiv ist, damit beim
+  // automatischen Abgeben wegen Zeitablauf der zuletzt eingegebene Text nicht verloren geht.
+  let currentOffenSpeichern = null;
 
   // ---- Elemente ----
   const screenName = document.getElementById("screen-name");
@@ -53,7 +63,7 @@
   if (introEl) {
     introEl.textContent =
       `Summativer Test · ${FRAGEN.length} Fragen · ${GESAMT_MAX} Punkte gesamt ` +
-      `(davon ${OFFEN_MAX} Punkte Reflexionsfragen, von der Lehrperson bewertet)`;
+      `(davon ${OFFEN_MAX} Punkte offene Fragen, von der Lehrperson bewertet)`;
   }
 
   const inputName = document.getElementById("input-name");
@@ -80,6 +90,9 @@
   const resultSaving = document.getElementById("result-saving");
   const resultSavedError = document.getElementById("result-saved-error");
   const resultCheatNote = document.getElementById("result-cheat-note");
+  const resultTimeoutNote = document.getElementById("result-timeout-note");
+
+  const timerBadge = document.getElementById("test-timer");
 
   // ---- Anti-Schummel: Tab/Fenster verlassen + Vollbild verlassen ----
   function logCheatEvent(typ) {
@@ -118,6 +131,42 @@
     }
   }
 
+  // ---- Countdown-Timer: startet mit der ersten Frage, läuft unabhängig vom Tab-Fokus ----
+  function startTimer() {
+    state.endTime = Date.now() + ZEITLIMIT_SEKUNDEN * 1000;
+    updateTimerDisplay();
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+  }
+
+  function updateTimerDisplay() {
+    if (!timerBadge) return;
+    const restSekunden = Math.max(0, Math.round((state.endTime - Date.now()) / 1000));
+    const min = Math.floor(restSekunden / 60);
+    const sek = restSekunden % 60;
+    timerBadge.textContent = `Verbleibende Zeit: ${min}:${String(sek).padStart(2, "0")}`;
+    timerBadge.classList.toggle("warn", restSekunden <= 120);
+    if (restSekunden <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      handleZeitablauf();
+    }
+  }
+
+  function stopTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  function handleZeitablauf() {
+    if (state.submitted) return;
+    // Noch nicht abgespeicherte Eingabe der aktuell offenen Frage sichern, bevor abgegeben wird.
+    if (currentOffenSpeichern) currentOffenSpeichern();
+    state.zeitAbgelaufen = true;
+    submitTest();
+  }
+
   function shuffle(arr) {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
@@ -145,6 +194,7 @@
     screenName.classList.add("hidden");
     screenTest.classList.remove("hidden");
     tryEnterFullscreen();
+    startTimer();
     renderQuestion();
   });
 
@@ -160,6 +210,7 @@
 
   // ---- Frage rendern (Dispatch nach Typ) ----
   function renderQuestion() {
+    currentOffenSpeichern = null;
     const f = state.order[state.posIndex];
     progressFill.style.width = (state.posIndex / state.order.length * 100) + "%";
 
@@ -459,7 +510,7 @@
 
     const hinweis = document.createElement("div");
     hinweis.className = "feedback info";
-    hinweis.textContent = "Diese Reflexionsfrage wird von der Lehrperson gelesen und von Hand bewertet.";
+    hinweis.textContent = "Diese Frage wird von der Lehrperson gelesen und von Hand bewertet.";
     qBody.appendChild(hinweis);
 
     function speichern() {
@@ -471,6 +522,8 @@
         maxPunkte: f.punkte
       };
     }
+
+    currentOffenSpeichern = speichern;
 
     btnWeiter.onclick = () => {
       speichern();
@@ -513,15 +566,22 @@
     renderQuestion();
   });
 
-  btnFinalSubmit.addEventListener("click", () => {
+  // Gemeinsamer Abgabe-Pfad für den regulären Button UND das automatische Abgeben bei
+  // Zeitablauf (handleZeitablauf() ruft dies direkt auf, ggf. noch von screen-test aus).
+  function submitTest() {
+    if (state.submitted) return;
     state.submitted = true;
+    stopTimer();
+    screenTest.classList.add("hidden");
     screenConfirm.classList.add("hidden");
     screenResult.classList.remove("hidden");
     if (document.fullscreenElement && document.exitFullscreen) {
       document.exitFullscreen().catch(() => {});
     }
     finishTest();
-  });
+  }
+
+  btnFinalSubmit.addEventListener("click", submitTest);
 
   // ---- Abschluss ----
   function finishTest() {
@@ -529,8 +589,12 @@
 
     resultAuto.textContent = `${autoPunkte} / ${AUTO_MAX} Punkten (automatisch ausgewertet)`;
     resultOffenNote.textContent =
-      `Zusätzlich ${OFFEN_MAX} Punkte aus ${OFFEN_FRAGEN.length} Reflexionsfrage(n) – ` +
+      `Zusätzlich ${OFFEN_MAX} Punkte aus ${OFFEN_FRAGEN.length} offene(n) Frage(n) – ` +
       `diese bewertet Ihre Lehrperson von Hand. Gesamt möglich: ${GESAMT_MAX} Punkte.`;
+
+    if (state.zeitAbgelaufen && resultTimeoutNote) {
+      resultTimeoutNote.classList.remove("hidden");
+    }
 
     if (state.cheatEvents.length > 0) {
       resultCheatNote.textContent =
@@ -569,6 +633,7 @@
       antwortenOffen: antwortenOffen,
       cheatEvents: state.cheatEvents,
       cheatCount: state.cheatEvents.length,
+      zeitAbgelaufen: state.zeitAbgelaufen,
       zeitstempel: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
       resultSaving.textContent = "Ergebnis wurde gespeichert und an die Lehrperson übermittelt.";
