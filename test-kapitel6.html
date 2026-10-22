@@ -23,13 +23,15 @@
 
     <div class="info-box">
       <strong>Hinweise zum Test:</strong><br>
-      Dies ist ein benoteter Test. Es gibt während der Bearbeitung kein Sofort-Feedback, ob eine
-      Antwort richtig war. Reflexionsfragen (freier Text) werden von Hr. Seidl von Hand gelesen
+      Dies ist ein benoteter Test – es gibt während der Bearbeitung kein Sofort-Feedback, ob eine
+      Antwort richtig war. Offene Fragen (freier Text) werden von der Lehrperson von Hand gelesen
       und bewertet.<br><br>
+      <strong>Zeitlimit:</strong> Ab der ersten Frage stehen Ihnen 23 Minuten zur Verfügung. Nach
+      Ablauf der Zeit wird der Test automatisch abgegeben.<br><br>
       Der Test versucht, sich im Vollbildmodus zu öffnen. Ein Wechsel zu einem anderen Tab/Fenster oder
-      ein Verlassen des Vollbildmodus wird gezählt und am Ende Herrn Seidl angezeigt. In der Folge wird der Testversuch als ungültig gewertet 
-      und ihr müsst einen anderen Test handschriftlich nachschreiben. Wechselt daher nicht auf einen anderen Tab, oder verlasst nicht den Vollbildmodus. 
-     Bitte beachtet, dass ihr zwischen den Reflexionsfragen am Ende wechseln könnt, jedoch nicht zwischen den Multiple Choice Fragen. Einmal beantwortet gibt es kein überarbeiten mehr. Die Fragen sind bei jedem zufällig angeordnet. 
+      ein Verlassen des Vollbildmodus wird gezählt und am Ende der Lehrperson angezeigt. Das ist kein
+      technischer Schummelschutz, sondern eine Transparenzmaßnahme – bitte bearbeiten Sie den Test daher
+      ohne Hilfsmittel und ohne das Fenster zu wechseln.
     </div>
 
     <button class="btn-primary" id="btn-start">Test starten</button>
@@ -38,11 +40,12 @@
   <!-- SCHRITT 2: Frage -->
   <div class="card hidden" id="screen-test">
     <div class="cheat-banner hidden" id="cheat-banner"></div>
+    <div class="timer-badge" id="test-timer">23:00</div>
     <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
     <div class="q-meta" id="q-meta">Frage 1 von 19</div>
     <div class="q-text" id="q-text">Fragetext</div>
     <div id="q-body"></div>
-    <button class="btn-secondary hidden" id="btn-zurueck" style="margin-bottom:10px; width:100%;">Zurück zur vorherigen Reflexionsfrage</button>
+    <button class="btn-secondary hidden" id="btn-zurueck" style="margin-bottom:10px; width:100%;">Zurück zur vorherigen offenen Frage</button>
     <button class="btn-primary" id="btn-weiter" disabled>Weiter</button>
   </div>
 
@@ -51,7 +54,7 @@
     <h2>Test abgeben?</h2>
     <ul class="confirm-list">
       <li><span>Automatisch auswertbare Fragen beantwortet</span><span id="confirm-answered">–</span></li>
-      <li><span>Reflexionsfragen beantwortet</span><span id="confirm-offen">–</span></li>
+      <li><span>Offene Fragen beantwortet</span><span id="confirm-offen">–</span></li>
       <li><span>Fenster/Vollbild verlassen</span><span id="confirm-cheat">–</span></li>
     </ul>
     <p style="color:var(--muted); font-size:0.9rem;">
@@ -70,6 +73,9 @@
       <div class="big" id="result-auto">0 / 0 Punkten</div>
       <div class="sub" id="result-offen-note"></div>
     </div>
+    <p id="result-timeout-note" class="feedback teil hidden" style="text-align:center;">
+      Die Zeit ist abgelaufen – der Test wurde automatisch abgegeben.
+    </p>
     <p id="result-saving" style="text-align:center; color:var(--muted); font-size:0.9rem;">Ergebnis wird gespeichert …</p>
     <p id="result-saved-error" class="error-msg hidden" style="text-align:center;">
       Das Ergebnis konnte nicht online gespeichert werden (keine Internetverbindung oder Firebase nicht eingerichtet).
