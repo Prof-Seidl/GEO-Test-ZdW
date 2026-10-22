@@ -111,10 +111,11 @@
       head.innerHTML =
         `<span class="name">${escapeHtml(d.name)}</span>` +
         `<span>${d.autoPunkte} / ${d.autoMaxPunkte} Pkt. automatisch (${prozent}%)</span>` +
-        `<span>+ ${d.offenMaxPunkte || 0} Pkt. Reflexion (manuell)</span>` +
+        `<span>+ ${d.offenMaxPunkte || 0} Pkt. offene Fragen (manuell)</span>` +
         `<span class="cheat-pill ${(d.cheatCount || 0) > 0 ? "warn" : ""}">` +
           `${(d.cheatCount || 0) > 0 ? (d.cheatCount + "× Fenster verlassen") : "kein Hinweis"}` +
         `</span>` +
+        (d.zeitAbgelaufen ? `<span class="cheat-pill warn">Zeit abgelaufen</span>` : "") +
         `<span style="color:var(--muted); font-size:0.8rem;">${datum}</span>`;
 
       const body = document.createElement("div");
@@ -126,13 +127,13 @@
           block.className = "open-answer-block";
           const antwortText = (a.antwort || "").trim();
           block.innerHTML =
-            `<div class="frage-label">Reflexionsfrage ${i + 1} · ${escapeHtml(a.bereich || "")} · max. ${a.maxPunkte} Punkte</div>` +
+            `<div class="frage-label">Offene Frage ${i + 1} · ${escapeHtml(a.bereich || "")} · max. ${a.maxPunkte} Punkte</div>` +
             `<div class="frage-text">${escapeHtml(a.frage || "")}</div>` +
             `<div class="antwort-text${antwortText ? "" : " leer"}">${antwortText ? escapeHtml(antwortText) : "(keine Antwort abgegeben)"}</div>`;
           body.appendChild(block);
         });
       } else {
-        body.innerHTML = "<p>Keine Reflexionsantworten vorhanden.</p>";
+        body.innerHTML = "<p>Keine Antworten zu offenen Fragen vorhanden.</p>";
       }
 
       head.addEventListener("click", () => body.classList.toggle("hidden"));
@@ -159,13 +160,14 @@
         "Punkte automatisch": d.autoPunkte,
         "Max. automatisch": d.autoMaxPunkte,
         "Fenster/Tab verlassen (Anzahl)": d.cheatCount || 0,
+        "Zeit abgelaufen": d.zeitAbgelaufen ? "Ja" : "Nein",
         Datum: d.zeitstempel && d.zeitstempel.toDate ? d.zeitstempel.toDate().toLocaleString("de-AT") : ""
       };
 
       const antworten = d.antwortenOffen || [];
       OFFEN_FRAGEN.forEach((fDef, i) => {
         const a = antworten.find((x) => x.frage === fDef.frage) || antworten[i];
-        const label = `Reflexion ${i + 1} (${fDef.bereich})`;
+        const label = `Offene Frage ${i + 1} (${fDef.bereich})`;
         row[label + " – Antwort"] = a ? a.antwort : "";
         row[label + ` – Punkte (max. ${fDef.punkte})`] = ""; // von Hand auszufüllen
       });
